@@ -1,16 +1,32 @@
 ---
-
+import RootLayout from "../layouts/BaseLayout.astro";
+import BlogList from "../components/BlogList.astro";
+import { Icon } from "astro-icon/components";
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
-    <title>Astro</title>
-  </head>
-  <body>
-    <h1>Astro</h1>
-  </body>
-</html>
+<RootLayout>
+  <!-- HOME PAGE -->
+  <main
+    class="h-dvh container min-w-96 mx-auto p-8 sm:p-12 flex flex-col items-center gap-8"
+  >
+    <!-- personal info -->
+    <!-- <div class="size-48 rounded-full overflow-hidden"> -->
+    <!--   <img src="https://w.wallhaven.cc/full/7p/wallhaven-7p2kye.jpg" alt="" /> -->
+    <!-- </div> -->
+    <h1 class="text-3xl sm:text-5xl text-nowrap">Philopence's Blog</h1>
+
+    <div>
+      <a href="https://github.com/philopence"
+        ><Icon name="devicon:github" size={24} /></a
+      >
+    </div>
+
+    <!-- <p class="space-x-2"> -->
+    <!--   <span class="font-semibold">Github:</span><a class="underline" href="#" -->
+    <!--     >https://github.com/philopence</a -->
+    <!--   > -->
+    <!-- </p> -->
+
+    <BlogList />
+  </main>
+</RootLayout>

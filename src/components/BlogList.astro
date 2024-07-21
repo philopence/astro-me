@@ -1,0 +1,18 @@
+---
+import { getCollection } from "astro:content";
+import type { CollectionEntry } from "astro:content";
+
+const blogEntries = (await getCollection("blog")) as CollectionEntry<"blog">[];
+---
+
+<ul class="list-disc space-y-4">
+  {
+  blogEntries.sort((prev, next) => new Date(prev.data.pubDate) > new Date(next.data.pubDate) ? 1 : -1).map((post) => (
+      <li>
+        <a class="underline hover:font-semibold" href={`/posts/${post.slug}`}>
+          {post.data.title}
+        </a>
+      </li>
+    ))
+  }
+</ul>

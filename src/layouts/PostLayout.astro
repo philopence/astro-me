@@ -1,0 +1,44 @@
+---
+import { getEntry } from "astro:content";
+import BaseLayout from "./BaseLayout.astro";
+import BlogList from "../components/BlogList.astro";
+import { Icon } from "astro-icon/components";
+
+const { slug } = Astro.props;
+
+const entry = await getEntry("blog", slug);
+
+if (entry == null) throw new Error("");
+
+const { Content, headings } = await entry.render();
+---
+
+<BaseLayout>
+  <!-- <article -->
+  <!--   class="max-w-none prose prose-table:border-2 prose-table:border-rosePine-overlay prose-table:text-center prose-table:text-rosePine-text prose-th:text-rosePine-pine prose-th:font-semibold prose-th:uppercase prose-td:border prose-td:border-rosePine-overlay prose-tr:border-rosePine-pine prose-thead:border-rosePine-pine prose-h1:text-rosePine-love prose-h2:text-rosePine-gold prose-h3:text-rosePine-foam prose-h4:text-rosepine-rose prose-p:text-rosePine-text prose-li:text-rosePine-text prose-li:marker:text-rosePine-iris prose-blockquote:bg-rosePine-overlay prose-blockquote:p-4 prose-code:text-rosePine-pine prose-pre:border prose-pre:border-rosePine-pine prose-pre:shadow-sm prose-pre:shadow-rosePine-pine prose-a:text-inherit" -->
+  <!-- > -->
+  <!--   <h1><a href="/">{frontmatter.title}</a></h1> -->
+  <!--   <slot /> -->
+  <!-- </article> -->
+
+  <!-- <a class="fixed top-8 left-8 underline font-semibold" href="/" -->
+  <!--   >&larr; Back to home</a -->
+  <!-- > -->
+  <article class="mx-auto max-w-screen-md min-w-96 p-8 prose prose-neutral">
+    <Content />
+  </article>
+</BaseLayout>
+
+<script>
+  const codeBlocks = document.querySelectorAll("pre");
+
+  codeBlocks.forEach((codeBlock) =>
+    codeBlock.addEventListener("click", clipHandler),
+  );
+
+  async function clipHandler(e: MouseEvent) {
+    const text = (e.target as HTMLElement).querySelector("code")?.innerText;
+    if (!text) return console.log("no content");
+    await navigator.clipboard.writeText(text);
+  }
+</script>
