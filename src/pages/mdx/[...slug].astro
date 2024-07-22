@@ -1,0 +1,42 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+import type { CollectionEntry } from "astro:content";
+
+export async function getStaticPaths() {
+  const blogCollection: CollectionEntry<"mdx">[] = await getCollection("mdx");
+
+  return blogCollection.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+
+// TODO no headings idea
+const { Content, headings } = await post.render();
+---
+
+<BaseLayout>
+  <article
+    class="mx-auto max-w-screen-md min-w-80 p-8 prose prose-sm prose-neutral prose-pre:text-sm"
+  >
+    <a
+      class="font-semibold text-neutral-900 rounded-full underline hover:no-underline relative -top-4"
+      href="/mdx">&larr;</a
+    >
+    <Content />
+  </article>
+</BaseLayout>
+
+<script>
+  const headings = document.querySelectorAll("h1, h2, h3, h4, h5, h6");
+
+  headings.forEach((heading) => {
+    const a = document.createElement("a");
+    a.innerHTML = heading.innerHTML;
+    a.href = `#${heading.id}`;
+    heading.innerHTML = a.outerHTML;
+  });
+</script>

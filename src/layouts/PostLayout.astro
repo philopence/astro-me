@@ -6,7 +6,7 @@ import { Icon } from "astro-icon/components";
 
 const { slug } = Astro.props;
 
-const entry = await getEntry("blog", slug);
+const entry = await getEntry("mdx", slug);
 
 if (entry == null) throw new Error("");
 

@@ -1,18 +1,41 @@
 ---
 import { getCollection } from "astro:content";
 import type { CollectionEntry } from "astro:content";
+import { Icon } from "astro-icon/components";
 
-const blogEntries = (await getCollection("blog")) as CollectionEntry<"blog">[];
+const blogEntries: CollectionEntry<"mdx">[] = await getCollection("mdx");
 ---
 
-<ul class="list-disc space-y-4">
-  {
-  blogEntries.sort((prev, next) => new Date(prev.data.pubDate) > new Date(next.data.pubDate) ? 1 : -1).map((post) => (
-      <li>
-        <a class="underline hover:font-semibold" href={`/posts/${post.slug}`}>
-          {post.data.title}
-        </a>
-      </li>
-    ))
-  }
-</ul>
+<div>
+  <a
+    class="font-semibold text-neutral-900 rounded-full underline hover:no-underline relative -top-4"
+    href="/">&larr;</a
+  >
+  <ul class="space-y-2">
+    {
+      blogEntries
+        .sort((prev, next) =>
+          new Date(prev.data.pubDate) > new Date(next.data.pubDate) ? 1 : -1,
+        )
+        .map((post) => (
+          <li class="flex items-center gap-4">
+            <Icon name="mdi:link-variant" size={24} />
+            <time class="text-sm">
+              {new Intl.DateTimeFormat("en-US", {
+                dateStyle: "medium",
+                timeZone: "Asia/Shanghai",
+              }).format(new Date(post.data.pubDate))}
+            </time>
+            <div>
+              <a
+                class="underline font-semibold hover:no-underline"
+                href={`/mdx/${post.slug}`}
+              >
+                {post.data.title}
+              </a>
+            </div>
+          </li>
+        ))
+    }
+  </ul>
+</div>

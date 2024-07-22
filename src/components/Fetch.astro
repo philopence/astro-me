@@ -1,0 +1,36 @@
+---
+import { Icon } from "astro-icon/components";
+---
+
+<div class="p-8">
+  <pre
+    class="text-sm text-center">
+ ____  _     _ _                                 
+|  _ \| |__ (_) | ___  _ __   ___ _ __   ___ ___ 
+| |_) | '_ \| | |/ _ \| '_ \ / _ \ '_ \ / __/ _ \
+|  __/| | | | | | (_) | |_) |  __/ | | | (_|  __/
+|_|   |_| |_|_|_|\___/| .__/ \___|_| |_|\___\___|
+                      |_|                        
+  </pre>
+  <div class="grid grid-cols-[auto_auto] gap-4 justify-center">
+    <div class="flex items-center gap-2">
+      <Icon name="mdi:message-bubble" size={24} />intro
+    </div>
+    <div>Web Developer</div>
+
+    <div class="flex items-center gap-2">
+      <Icon name="mdi:linux" size={24} />distro
+    </div>
+    <div>NixOS</div>
+
+    <div class="flex items-center gap-2">
+      <Icon name="mdi:code" size={24} />editor
+    </div>
+    <div>Neovim</div>
+
+    <div class="flex items-center gap-2">
+      <Icon name="mdi:github" size={24} />github
+    </div>
+    <div><a class="underline" href="https://github.com/philopence">https://github.com/philopence</a></div>
+  </div>
+</div>

@@ -1,0 +1,25 @@
+---
+import { Icon } from "astro-icon/components";
+
+interface Props {
+  type: "note" | "tip" | "important" | "warning" | "caution";
+  text: string;
+}
+
+const { type, text } = Astro.props;
+
+const types = {
+  note: "mdi:information",
+  tip: "mdi:lightbulb",
+  important: "mdi:warning-decagram",
+  warning: "mdi:warning",
+  caution: "mdi:sign-caution",
+};
+---
+
+<blockquote class="border-l-4 border-neutral-900 p-2 space-y-3">
+  <div class="uppercase flex gap-2 items-center text-sm font-bold tracking-wider">
+    <Icon name={types[type]} size={24} /><span>{type}</span>
+  </div>
+  <p>{text}</p>
+</blockquote>

@@ -1,0 +1,20 @@
+---
+import BlockQuote from "@components/BlockQuote.astro";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Fetch from "@components/Fetch.astro"
+---
+
+<BaseLayout>
+  <main class="p-8 space-y-8">
+    <BlockQuote type="note" text="some warning text" />
+    <BlockQuote type="tip" text="some note text" />
+    <BlockQuote type="important" text="some note text" />
+    <BlockQuote type="warning" text="some note text" />
+    <BlockQuote type="caution" text="some note text" />
+
+      <hr>
+
+      <Fetch />
+
+  </main>
+</BaseLayout>
