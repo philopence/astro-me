@@ -1,0 +1,17 @@
+---
+import { Icon } from "astro-icon/components";
+
+interface Props {
+  text: string;
+  url: string;
+  icon?: string;
+  size?: number;
+}
+
+const { text, url, icon = "mdi:link-variant", size = 24 } = Astro.props;
+---
+
+<a class="font-semibold hover:nounderline flex items-center gap-2" href={url} target="_blank">
+  <Icon name={icon} size={size} />
+  <span>{text}</span>
+</a>
