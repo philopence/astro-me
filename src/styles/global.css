@@ -5,3 +5,14 @@
   font-style: normal;
   font-display: swap;
 }
+
+del {
+  background-color: #303030;
+  color: #303030;
+  transition: all 500ms;
+}
+
+del:hover {
+  background-color: inherit;
+  color: inherit;
+}

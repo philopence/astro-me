@@ -1,0 +1,81 @@
+---
+author: philopence
+title: UI Structure
+pubDate: Mon Jul 22 03:42:25 AM CST 2024
+---
+import BlockQuote from "../../components/BlockQuote.astro";
+
+# Webpage UI Structure
+
+## UI 拆分
+
+元素指单个 HTML 标签
+
+组件由一个或多个元素组成
+
+页面由一个或多个组件构成
+
+## 容器
+
+元素与组件无关，组件与页面无关。
+
+那么，如何约束呢？容器！仅影响页面结构。比如 tailwindcss 中的 `container` 响应式宽度。
+
+UI 可以看作是不同容器的排列组合，也就是布局。
+
+常用的有：Normal Flow，Flexbox，Grid，Position。（其他：Floats，Multiple-column）
+
+它们提供了不同的容器行为，与控制方式。
+
+## 示例
+
+```html
+<!--
+解耦 HTML 结构
+-->
+<ul>
+  <li><Component /></li>
+  <li><Component /></li>
+</ul>
+```
+
+```html
+<!--
+解耦 CSS 样式
+-->
+<div class="flex">
+  <div><Component /></div>
+  <div class="grow"><Component /></div>
+</body>
+```
+
+```html
+<!--
+多个容器约束，取决于设计
+-->
+<section class="bg-blue-500">
+  <div class="container">
+    <Component />
+  </div>
+</section>
+```
+
+## 嵌套
+
+组件可以看作功能更单一的页面。同样可以通过布局控制元素
+
+```html
+<div class="card flex">
+  <div class="cover"><Image /></div>
+  <div class="content">
+    <Title />
+    <Description />
+  </div>
+</div>
+```
+
+## 感想
+
+<BlockQuote type="note" text="无规矩不成方圆" />
+
+

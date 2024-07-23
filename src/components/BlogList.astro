@@ -7,15 +7,11 @@ const blogEntries: CollectionEntry<"mdx">[] = await getCollection("mdx");
 ---
 
 <div>
-  <a
-    class="font-semibold text-neutral-900 rounded-full underline hover:no-underline relative -top-4"
-    href="/">&larr;</a
-  >
   <ul class="space-y-2">
     {
       blogEntries
         .sort((prev, next) =>
-          new Date(prev.data.pubDate) > new Date(next.data.pubDate) ? 1 : -1,
+          new Date(next.data.pubDate).getTime() - new Date(prev.data.pubDate).getTime(),
         )
         .map((post) => (
           <li class="flex items-center gap-4">

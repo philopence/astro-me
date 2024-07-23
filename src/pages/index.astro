@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "@layouts/BaseLayout.astro";
 import Fetch from "@components/Fetch.astro";
+import BlogList from "@components/BlogList.astro";
 ---
 
 <BaseLayout>
@@ -10,7 +11,7 @@ import Fetch from "@components/Fetch.astro";
   >
     <Fetch />
 
-    <p><a class="underline font-semibold hover:no-underline" href="/mdx">Visit my blog &rarr;</a></p>
+    <BlogList />
 
   </main>
 </BaseLayout>
