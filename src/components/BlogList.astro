@@ -10,18 +10,15 @@ const blogEntries: CollectionEntry<"mdx">[] = await getCollection("mdx");
   <ul class="space-y-2">
     {
       blogEntries
-        .sort((prev, next) =>
-          new Date(next.data.pubDate).getTime() - new Date(prev.data.pubDate).getTime(),
+        .sort(
+          (prev, next) =>
+            new Date(next.data.pubDate).getTime() -
+            new Date(prev.data.pubDate).getTime(),
         )
         .map((post) => (
           <li class="flex items-center gap-4">
             <Icon name="mdi:link-variant" size={24} />
-            <time class="text-sm">
-              {new Intl.DateTimeFormat("en-US", {
-                dateStyle: "medium",
-                timeZone: "Asia/Shanghai",
-              }).format(new Date(post.data.pubDate))}
-            </time>
+            <time class="text-sm">{post.data.pubDate}</time>
             <div>
               <a
                 class="underline font-semibold hover:no-underline"

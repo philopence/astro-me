@@ -1,0 +1,52 @@
+---
+author: philopence
+title: RSC and SSR
+pubDate: Wed, Jul 24, 2024
+---
+
+# RSC and SSR
+
+不知道是否有人跟我一样困惑，这两个概念。
+
+- RSC：React Server Component
+- SSR：Server Side Render
+
+## Server and Client
+
+C/S 一种经典的软件架构，Client 与 Server 通过「请求」与「响应」进行交互。
+
+最常见的就是 Web 应用，分别运行在浏览器与服务器上。在许多描述中，服务器与 server 被混为一谈。
+
+事实上，能处理某个请求的都能被称为 server，能发起被它处理的请求的称为 client。
+
+比如实现了 LSP 的 server 和 client。
+
+## 什么是 RSC？
+
+即 React 组件以 C/S 架构进行渲染。
+
+传统 react 组件的工作流程是：Trigger &rarr; Render &rarr; Commit。全部在 client 中完成。
+
+而 RSC 呢？将过程分为了两部分，分别在 **react** server 和 **react** client 中执行，通过 RSC Payload 进行数据传递。
+
+在这个架构中，自然存在两种 react 组件，简称为 SC 和 CC，分别在 react 的 server 和 client 中被渲染
+
+## SSR
+
+SSR 指在服务器上渲染生成 HTML 再发送给客户端（浏览器）
+
+RSC 只是改变了 react 的渲染方式，最后同样生成虚拟 DOM。在 SSR 中，会在服务器上直接 commit 为 HTML，此时的 HTML 由两种组件构成（SC 和 CC）。
+
+发送到客户端后，和传统的 SSR 页面没有任何区别。
+
+如果仅仅是这样的话。
+
+此后服务端还会做一件事，就是将 RSC Payload 与 CC 的 JS 一起发送给客户端。（推测：得益于 C/S 可以仅发送 Client 需要的部分）
+
+此时的客户端有什么呢？初始的 HTML，RSC Payload 以及 CC 组件的 JS 代码。它可以根据这些信息重新推导虚拟 DOM，并充分利用已经渲染的 DOM，用 JS 接管需要交互的 CC 组件，这个过程称为「Hydration」。
+
+## 感想
+
+应该是目前最理想的解决方案了，再加上 next.js 这样的框架实现的更多特性（streaming，cache 等等），也在完善补充优化该模式。
+
+---

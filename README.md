@@ -1,5 +1,3 @@
 # Philopence
 
 ## TODOS
-
-- [ ] breadcrumb
