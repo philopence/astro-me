@@ -1,0 +1,60 @@
+---
+author: philopence
+title: Next.js Share Data and State
+pubDate: Fri, Aug 02, 2024
+---
+import BlockQuote from "@/components/BlockQuote.astro"
+
+# Next.js Share Data and State
+
+<BlockQuote type="note" text="UI = f(data)(state)" />
+
+这是来自 [Jonas](https://github.com/jonasschmedtmann) 的 RSC 渲染抽象描述。
+
+该范式涉及 server-side 和 client-side 以及两种类型的数据，那么共享或传递数据呢？
+
+## 明确渲染流程
+
+在 server 上，SC 与 CC 根据初始数据渲染生成 HTML，同时生成 RSC Payload 与 CC 对应的 JS 代码块。
+
+在 client 上，渲染 HTML 初始化页面，随后加载 JS 进行「Hydration」实现「交互」。
+
+对于 SC 而言，能直接获取 server 及其他 API 的数据，仅在请求需要更新数据时才会被重新渲染；
+
+对于 CC 而言，初始数据包括 props 以及 states，组件是一个「pure」函数，初始渲染在 server 上是一致的，后续的交互发生在 client 中。
+
+## 在哪里获取数据
+
+尽可能在 server 中完成数据请求。
+
+依赖于请求的数据在 `page` 中获取，能在 props 中直接拿到请求信息。
+
+其他数据尽量拆分到各自需要的组件中，通过 `<Suspense>` 优化（流式传输）。
+
+无法拆分时，可用 `Promise.all()` 并行请求。
+
+## SC to SC
+
+在 server 上如果 props 过深，由于没有 state store，可以利用 react.js 的 `Request Memoization` 机制获取数据。
+
+## SC to CC
+
+这个过程只能发生在 server 中，可以通过 props 直接传递，用于初始化渲染。
+
+## CC to SC
+
+SC 只能在 server 上被渲染，CC 只能通过请求重新渲染，而请求中可以包含 `searchParams` 传递数据。
+
+## CC to CC
+
+通常 props 或 context api 即可。根据 states 的作用范围决定。如果 states 较为复杂，可以使用 reducer api 约束。
+
+## 嵌套关系
+
+显然，SC 可以导入并渲染 CC，而 CC 可能在 client 中 re-render，如果也导入并渲染 SC，也会触发 SC 的 re-render，而这个过程不能发生在 client 中。
+
+因此，CC 可以通过 children 或 props 接收 SC 渲染，此时 SC 已被渲染为 React Element 不参与后续 CC 可能存在的 re-render 阶段。
+
+## 感想
+
+适当的归纳有助于理解和分析，也是自我检验的过程。

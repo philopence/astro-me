@@ -1,0 +1,25 @@
+---
+author: philopence
+title: NixOS and NeoVim
+pubDate: Fri, Jul 26, 2024
+---
+
+# NixOS and NeoVim
+
+在 NixOS 中（默认）只能使用由 nix 构建的二进制文件，而 Neovim 的依赖往往含有已编译的二进制文件（LSP Server 等等）。
+
+且用 Mason 管理依赖时，可执行目录无法被识别，即使 npm 安装的 cli 也无法运行。
+
+## 依赖管理
+
+无非两种，用 nix 打包所有依赖，或者让 NixOS 可以执行其他二进制文件。
+
+幸运的是，nixpkgs 作为目前最大的包仓库，有着绝大多数依赖，即使没有，也有许多同类示例，参照自己打包（PR 中可能已有未合并的）,绝对没有想象中的困难。这样做的好处是，可以移除 Mason 插件，用 nix 管理 neovim 依赖，统一管理。缺点是不便于获取依赖相关信息，比如路径。用 nix 写配置便于获取，但会失去 lazy.nvim 这样的优化。用 lua 写配置则需要 nix 命令读取信息。还有一个缺点是依赖的版本可能会落后，无法第一时间体验 Neovim 新特性。
+
+另一个是让 NixOS 可以运行其他二进制文件，将依赖的库文件添加到「传统」目录中即可，可以通过 `nix-ld` 选项配置。再将 mason 的安装目录添加到 PATH 中。这样可以让 neovim 配置不依赖于环境。缺点是当前 NixOS 是独特的，其他 NixOS 无法运行该 Flake 中的 Neovim。（Neovim 目前有个的配置项也可以指定库文件）
+
+## Nix or Lua
+
+如果以 NixOS 为主，可以选择 NixVim 这样的项目，声明配置。有限，但够用。
+
+如果以 NeoVim 为主，只想在自己的 NixOS 中使用，添加一些 `impure` 也没什么问题。
